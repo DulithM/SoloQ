@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Study Helper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .section {
+            margin-bottom: 2rem;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AI Study Helper</h1>
+        <p>Upload your notes and generate practice questions!</p>
+    </header>
+    <div class="container">
+        <!-- Upload Notes Section -->
+        <div class="section" id="upload-notes">
+            <h2>Upload Your Study Materials</h2>
+            <label for="file-upload">Choose a file:</label>
+            <input type="file" id="file-upload" accept=".txt, .pdf, .docx">
+            <button id="upload-btn">Upload</button>
+        </div>
+
+        <!-- Add Subject Section -->
+        <div class="section" id="add-subject">
+            <h2>Add a Subject</h2>
+            <label for="subject-name">Subject Name:</label>
+            <input type="text" id="subject-name" placeholder="e.g., Biology, Math">
+            <button id="add-subject-btn">Add Subject</button>
+        </div>
+
+        <!-- Generate Questions Section -->
+        <div class="section" id="generate-questions">
+            <h2>Generate Practice Questions</h2>
+            <label for="question-topic">Select Subject:</label>
+            <select id="question-topic">
+                <option value="">-- Choose a subject --</option>
+                <!-- Dynamically filled options -->
+            </select>
+            <button id="generate-btn">Generate Questions</button>
+        </div>
+
+        <!-- Display Generated Questions -->
+        <div class="section" id="questions-display" style="display:none;">
+            <h2>Generated Questions</h2>
+            <div id="questions-container"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('upload-btn').addEventListener('click', () => {
+            const fileInput = document.getElementById('file-upload');
+            if (fileInput.files.length > 0) {
+                alert('File uploaded successfully!');
+            } else {
+                alert('Please select a file to upload.');
+            }
+        });
+
+        document.getElementById('add-subject-btn').addEventListener('click', () => {
+            const subjectInput = document.getElementById('subject-name');
+            const subjectName = subjectInput.value.trim();
+            if (subjectName) {
+                const select = document.getElementById('question-topic');
+                const option = document.createElement('option');
+                option.value = subjectName;
+                option.textContent = subjectName;
+                select.appendChild(option);
+                subjectInput.value = '';
+                alert('Subject added!');
+            } else {
+                alert('Please enter a subject name.');
+            }
+        });
+
+        document.getElementById('generate-btn').addEventListener('click', () => {
+            const topic = document.getElementById('question-topic').value;
+            const questionsDisplay = document.getElementById('questions-display');
+            const questionsContainer = document.getElementById('questions-container');
+            
+            if (topic) {
+                questionsDisplay.style.display = 'block';
+                questionsContainer.innerHTML = `
+                    <p>Here are some practice questions for <strong>${topic}</strong>:</p>
+                    <ul>
+                        <li>What are the key concepts of ${topic}?</li>
+                        <li>Explain the main ideas behind ${topic}.</li>
+                        <li>List three examples related to ${topic} and explain each.</li>
+                    </ul>
+                `;
+            } else {
+                alert('Please select a subject to generate questions.');
+            }
+        });
+    </script>
+</body>
+</html>
